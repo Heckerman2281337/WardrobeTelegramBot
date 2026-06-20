@@ -1,24 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace telegramBot.src.Entities
+﻿namespace telegramBot.src.Entities
 {
     public class ClothingItem
     {
-        public ClothingItem(long userId, string fileId, ClothingItemType clothingType) 
+        public ClothingItem() { }
+
+        public ClothingItem(string name, long userId, string fileId, ClothingItemType clothingType) 
         { 
+            Name = name;
             Id = Guid.NewGuid();
             UserId = userId;
             FileId = fileId;
             ClothingType = clothingType;
         }
-
-        public Guid Id { get; }
-        public long UserId { get; }
-        public string FileId { get; }
-        public ClothingItemType ClothingType { get; }
+        public string Name { get; private set; } = null!;
+        public Guid Id { get; private set; }
+        public long UserId { get; private set; }
+        public string FileId { get; private set; } = null!;
+        public ClothingItemType ClothingType { get; private set; }
     }
 }
