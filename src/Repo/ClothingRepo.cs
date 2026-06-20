@@ -1,16 +1,15 @@
 ﻿using telegramBot.src.Entities;
-using telegramBot.src.Services;
 
-namespace telegramBot.src
+namespace telegramBot.src.Repo
 {
-    internal class ClothingService : IClothingService
+    internal class ClothingRepo : IClothingRepo
     {
         public Task AddClothingAsync(ClothingItem item)
         {
             throw new NotImplementedException();
         }
 
-        public Task DeleteItemAsync(Guid id)
+        public Task DeleteItemAsync(ClothingItem item)
         {
             throw new NotImplementedException();
         }
@@ -20,7 +19,7 @@ namespace telegramBot.src
             throw new NotImplementedException();
         }
 
-        public Task<List<ClothingItem>> GetItemByTypeAsync(ClothingItemType type)
+        public Task<List<ClothingItem>> GetItemByTypeAsync(long userId, ClothingItemType type, int skip, int take)
         {
             throw new NotImplementedException();
         }
