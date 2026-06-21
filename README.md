@@ -38,3 +38,5 @@ Tired of trying to find your perfect outfit? And putting all those clothes away 
 ## Notes for me (TODO)
 - [ ] Add structured logger
 - [ ] Dockerize the application (Bot + Database).
+
+- [ ] Maybe add English lang for it
