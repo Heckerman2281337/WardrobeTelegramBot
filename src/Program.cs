@@ -2,6 +2,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using telegramBot.src.Repo;
+using telegramBot.src.Services;
+using telegramBot.src.Handlers;
 namespace telegramBot.src
 {
     public class Program
@@ -20,9 +22,10 @@ namespace telegramBot.src
                 .ConfigureServices(services =>
                 {
                     services.AddDataAcces();
+                    services.AddBusinessLogic();
                     services.AddScoped<BotHandler>();
-
                     services.AddSingleton<ITelegramBotClient>(new TelegramBotClient(token));
+                    services.AddSingleton<SessionManager>();
                     services.AddHostedService<BotBackgroundService>();
                 }
                 )

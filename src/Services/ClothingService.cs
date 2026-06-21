@@ -1,13 +1,22 @@
-﻿using telegramBot.src.Entities;
+﻿using Telegram.Bot.Types;
+using telegramBot.src.Entities;
+using telegramBot.src.Repo;
 using telegramBot.src.Services;
 
 namespace telegramBot.src
 {
     internal class ClothingService : IClothingService
     {
-        public Task AddClothingAsync(ClothingItem item)
+        public ClothingService(IClothingRepo repo)
         {
-            throw new NotImplementedException();
+            _repo = repo;
+        }
+        private readonly IClothingRepo _repo;
+        public async Task AddClothingAsync(string name, long chatId, long userId, string fileId, ClothingItemType type)
+        {
+            var item = new ClothingItem(name, userId, chatId, fileId, type);
+            
+            await _repo.AddClothingAsync(item);
         }
 
         public Task DeleteItemAsync(Guid id)
