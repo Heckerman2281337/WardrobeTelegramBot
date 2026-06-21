@@ -40,3 +40,4 @@ Tired of trying to find your perfect outfit? And putting all those clothes away 
 - [ ] Dockerize the application (Bot + Database).
 
 - [ ] Maybe add English lang for it
+- [ ] Maybe add AI to create outfit image?
