@@ -1,17 +1,10 @@
 ﻿using System.Collections.Concurrent;
-using telegramBot.src.Entities;
+using telegramBot.src.Entities.Session;
 namespace telegramBot.src.Services
 {
     public class SessionManager
     {
         private readonly ConcurrentDictionary<long, UserSession> _sessions = new();
-
-        private bool IsSessionExists(long userId)
-        {
-            if (!_sessions.ContainsKey(userId)) return false;
-
-            return true;
-        }
 
         public UserSession? GetSession(long userId)
         {
@@ -20,15 +13,35 @@ namespace telegramBot.src.Services
             return session;
         }
 
-        public void SetSession(long userId)
+        public void SetSession(long userId, SessionMode sessionMode)
         {
-            if (!IsSessionExists(userId))
-                _sessions[userId] = new UserSession { Step = SessionStep.AddingType };
+            _sessions[userId] = sessionMode switch
+            {
+                SessionMode.AddItem => new UserSession
+                {
+                    Step = SessionStep.AddingType,
+                    Mode = sessionMode
+                },
+
+                SessionMode.RemoveItem => new UserSession
+                {
+                    Step = SessionStep.RemoveItem,
+                    Mode = sessionMode
+                },
+
+                SessionMode.CreateOutfit => new UserSession
+                {
+                    Step = SessionStep.ChoosingOutfitTop,
+                    Mode = sessionMode
+                },
+
+                _ => new UserSession()
+            };
         }
 
         public void ClearSession(long userId)
         {
-            if(IsSessionExists(userId)) _sessions.TryRemove(userId, out var userSession);
+            _sessions.TryRemove(userId, out var userSession);
         }
     }
 }

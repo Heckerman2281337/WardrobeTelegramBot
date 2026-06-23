@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using telegramBot.src.Entities;
+using telegramBot.src.Entities.Clothing;
 namespace telegramBot.src.Repo
 {
     public class ClothingDbContext(DbContextOptions<ClothingDbContext> options) : DbContext(options)

@@ -1,4 +1,4 @@
-﻿namespace telegramBot.src.Entities
+﻿namespace telegramBot.src.Entities.Clothing
 {
     public enum ClothingItemType
     {

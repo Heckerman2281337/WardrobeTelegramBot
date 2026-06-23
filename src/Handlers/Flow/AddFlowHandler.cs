@@ -1,55 +1,46 @@
-﻿using Telegram.Bot.Types.Enums;
+﻿using Telegram.Bot;
+using Telegram.Bot.Types.Enums;
 using Telegram.Bot.Types;
-using telegramBot.src.Entities;
+using telegramBot.src.Entities.Session;
 using telegramBot.src.Services;
-using Telegram.Bot;
 
-namespace telegramBot.src.Handlers
-{   //Handler for existing session
-    internal class BotUserFlowHandler
+namespace telegramBot.src.Handlers.Flow
+{
+    internal class AddFlowHandler : IFlowHandler
     {
-        private readonly Dictionary<string, ClothingItemType> _clothingType = new Dictionary<string, ClothingItemType>
+        public AddFlowHandler(ITelegramBotClient client, IClothingService service, SessionManager sessionManager)
         {
-            { "Вверх", ClothingItemType.Top },
-            { "Низ", ClothingItemType.Bottom },
-            { "Обувь", ClothingItemType.Footwear },
-            { "Голова", ClothingItemType.Headwear },
-            { "Всё тело", ClothingItemType.FullBody }
-        };
-
-        public BotUserFlowHandler(ITelegramBotClient client, IClothingService clothingService, SessionManager sessionManager) 
-        { 
             _client = client;
-            _clothingService = clothingService;
+            _clothingService = service;
             _sessionManager = sessionManager;
         }
+
         private readonly ITelegramBotClient _client;
         private readonly IClothingService _clothingService;
         private readonly SessionManager _sessionManager;
 
-        public async Task HandleFlowAsync(Message message, long userId, CancellationToken cancellationToken)
+        public SessionMode Mode => SessionMode.AddItem;
+        public async Task HandleAsync(UserSession session, Message message, CancellationToken cancellationToken)
         {
-            var session = _sessionManager.GetSession(userId);
-            if (session == null) return;
 
             var sessionStep = session.Step;
             switch (sessionStep)
             {
                 case SessionStep.AddingType:
-                    await HandleTypeAddingAsync(session, message, cancellationToken);
+                    await HandleTypeStepAsync(session, message, cancellationToken);
                     break;
                 case SessionStep.AddingPhoto:
-                    await HandlePhotoAddingAsync(session, message, cancellationToken);
+                    await HandlePhotoStepAsync(session, message, cancellationToken);
                     break;
                 case SessionStep.AddingName:
-                    await HandleNameAddingAsync(userId, session, message, cancellationToken);
+                    await HandleNameStepAsync(message.From!.Id, session, message, cancellationToken);
                     break;
             }
         }
 
-        private async Task HandleTypeAddingAsync(UserSession session, Message message, CancellationToken cancellationToken)
+        private async Task HandleTypeStepAsync(UserSession session, Message message, CancellationToken cancellationToken)
         {
-            if (message.Type != MessageType.Text || !_clothingType.ContainsKey(message.Text!))
+            if (message.Type != MessageType.Text || !ClothingMap.Types.TryGetValue(message.Text!, out var type))
             {
                 await _client.SendMessage(chatId: message.Chat.Id,
                     text: "Пожалуйста, выберите тип одежды",
@@ -57,7 +48,7 @@ namespace telegramBot.src.Handlers
                 return;
             }
 
-            session.Type = _clothingType[message.Text!];
+            session.Type = type;
             session.Step = SessionStep.AddingPhoto;
 
             await _client.SendMessage(
@@ -65,7 +56,7 @@ namespace telegramBot.src.Handlers
                         text: "Пришлите фото",
                         cancellationToken: cancellationToken);
         }
-        private async Task HandlePhotoAddingAsync(UserSession session, Message message, CancellationToken cancellationToken)
+        private async Task HandlePhotoStepAsync(UserSession session, Message message, CancellationToken cancellationToken)
         {
             if (message.Type != MessageType.Photo)
             {
@@ -84,7 +75,7 @@ namespace telegramBot.src.Handlers
                 cancellationToken: cancellationToken);
             //add confirm from user
         }
-        private async Task HandleNameAddingAsync(long userId, UserSession session, Message message, CancellationToken cancellationToken)
+        private async Task HandleNameStepAsync(long userId, UserSession session, Message message, CancellationToken cancellationToken)
         {
             if (message.Type != MessageType.Text)
             {
@@ -96,18 +87,32 @@ namespace telegramBot.src.Handlers
             }
             session.ClothingName = message.Text!;
 
-            await _client.SendMessage(
-                chatId: message.Chat.Id,
-                text: "Вещь добавлена в гардероб!",
-                cancellationToken: cancellationToken);
 
-            _sessionManager.ClearSession(userId);
-
-            await _clothingService.AddClothingAsync(
+            try
+            {
+                await _clothingService.AddClothingAsync(
                 session.ClothingName,
                 message.From!.Id,
                 session.FileId!,
                 session.Type!.Value);
+            }
+            catch (Exception ex)
+            {
+                await _client.SendMessage(
+                chatId: message.Chat.Id,
+                text: "К сожалению, произошла ошибка, попробуйте снова",
+                cancellationToken: cancellationToken);
+
+                Console.WriteLine(ex); //logger later
+            }
+
+
+            _sessionManager.ClearSession(userId);
+
+            await _client.SendMessage(
+                chatId: message.Chat.Id,
+                text: "Вещь добавлена в гардероб!",
+                cancellationToken: cancellationToken);
         }
     }
 }

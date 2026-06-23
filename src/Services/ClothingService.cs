@@ -1,5 +1,4 @@
-﻿using Telegram.Bot.Types;
-using telegramBot.src.Entities;
+﻿using telegramBot.src.Entities.Clothing;
 using telegramBot.src.Repo;
 using telegramBot.src.Services;
 
@@ -15,24 +14,34 @@ namespace telegramBot.src
         private readonly IClothingRepo _repo;
         public async Task AddClothingAsync(string name, long userId, string fileId, ClothingItemType type)
         {
-            var item = new ClothingItem(name, userId, fileId, type);
+            var item = new ClothingItem(name.ToLower(), userId, fileId, type);
             
             await _repo.AddClothingAsync(item);
         }
 
-        public Task DeleteItemAsync(Guid id)
+        public async Task DeleteItemAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var item = await GetItemAsync(id);
+
+            if (item == null) return;
+
+            await _repo.DeleteItemAsync(item);
         }
 
-        public Task<ClothingItem> GetItemByIdAsync(Guid id)
+        public async Task<ClothingItem> GetItemAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var item = _repo.GetItemAsync(id);
+
+            if (item == null) throw new ArgumentException($"Item {id} not found");
+
+            return await item;
         }
 
-        public Task<List<ClothingItem>> GetItemByTypeAsync(ClothingItemType type)
+        public async Task<List<ClothingItem>> GetItemByTypeAsync(long userId, ClothingItemType type, int page)
         {
-            throw new NotImplementedException();
+            return await _repo.GetItemByTypeAsync(userId, type, page);
         }
+
+        
     }
 }

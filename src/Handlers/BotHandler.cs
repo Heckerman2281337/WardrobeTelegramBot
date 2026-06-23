@@ -1,26 +1,27 @@
 ﻿using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
+using telegramBot.src.Handlers.Command;
+using telegramBot.src.Handlers.Flow;
 using telegramBot.src.Services;
 
 namespace telegramBot.src.Handlers
 {
     internal class BotHandler
     {
-
         public BotHandler(ITelegramBotClient botClient, SessionManager sessionManager,
-            BotCommandHandler commandHandler, BotUserFlowHandler flowHandler) 
+            CommandHandler commandHandler, FlowRouter flowRouter) 
         {
             _client = botClient;
             _sessionManager = sessionManager;
             _commandHandler = commandHandler;
-            _flowHandler = flowHandler;
+            _flowRouter = flowRouter;
         }
 
         private readonly ITelegramBotClient _client;
         private readonly SessionManager _sessionManager;
-        private readonly BotCommandHandler _commandHandler;
-        private readonly BotUserFlowHandler _flowHandler;
+        private readonly CommandHandler _commandHandler;
+        private readonly FlowRouter _flowRouter;
 
         public async Task HandleUpdateAsync(Update update, CancellationToken cancellationToken)
         {
@@ -39,10 +40,8 @@ namespace telegramBot.src.Handlers
                 return;
             }
 
-            var session = _sessionManager.GetSession(userId);
-
             if (session == null) await _commandHandler.HandleCommandAsync(message, cancellationToken);
-            else await _flowHandler.HandleFlowAsync(message, userId, cancellationToken);
+            await _flowRouter.RouteFlowAsync(message, userId, cancellationToken);
         }
     }
 }
