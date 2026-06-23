@@ -11,10 +11,11 @@ namespace telegramBot.src
         {
             _repo = repo;
         }
+
         private readonly IClothingRepo _repo;
-        public async Task AddClothingAsync(string name, long chatId, long userId, string fileId, ClothingItemType type)
+        public async Task AddClothingAsync(string name, long userId, string fileId, ClothingItemType type)
         {
-            var item = new ClothingItem(name, userId, chatId, fileId, type);
+            var item = new ClothingItem(name, userId, fileId, type);
             
             await _repo.AddClothingAsync(item);
         }

@@ -23,7 +23,7 @@ namespace telegramBot.src
                 {
                     services.AddDataAcces();
                     services.AddBusinessLogic();
-                    services.AddScoped<BotHandler>();
+                    services.AddHandlers();
                     services.AddSingleton<ITelegramBotClient>(new TelegramBotClient(token));
                     services.AddSingleton<SessionManager>();
                     services.AddHostedService<BotBackgroundService>();

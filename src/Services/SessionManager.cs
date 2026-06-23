@@ -1,6 +1,6 @@
 ﻿using System.Collections.Concurrent;
 using telegramBot.src.Entities;
-namespace telegramBot.src
+namespace telegramBot.src.Services
 {
     public class SessionManager
     {
@@ -23,10 +23,7 @@ namespace telegramBot.src
         public void SetSession(long userId)
         {
             if (!IsSessionExists(userId))
-            {
-                _sessions[userId] = new UserSession();
-                _sessions[userId].Step = SessionStep.AddingType;
-            }
+                _sessions[userId] = new UserSession { Step = SessionStep.AddingType };
         }
 
         public void ClearSession(long userId)

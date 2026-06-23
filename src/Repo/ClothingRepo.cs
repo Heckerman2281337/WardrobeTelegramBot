@@ -4,17 +4,20 @@ namespace telegramBot.src.Repo
 {
     internal class ClothingRepo : IClothingRepo
     {
-        public Task AddClothingAsync(ClothingItem item)
+        public ClothingRepo(ClothingDbContext context) 
+        { 
+            _context = context;
+        }
+        private readonly ClothingDbContext _context;
+
+        public async Task<ClothingItem> AddClothingAsync(ClothingItem item)
         {
-            throw new NotImplementedException();
+            await _context.AddAsync(item);
+            await _context.SaveChangesAsync();
+            return item;
         }
 
         public Task DeleteItemAsync(ClothingItem item)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<ClothingItem> GetItemByIdAsync(Guid id)
         {
             throw new NotImplementedException();
         }
