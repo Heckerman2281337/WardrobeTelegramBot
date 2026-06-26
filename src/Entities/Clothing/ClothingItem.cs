@@ -1,4 +1,4 @@
-﻿namespace telegramBot.src.Entities
+﻿namespace telegramBot.src.Entities.Clothing
 {
     public class ClothingItem
     {
@@ -8,11 +8,13 @@
         { 
             Name = name;
             Id = Guid.NewGuid();
+            Created = DateTime.UtcNow;
             UserId = userId;
             FileId = fileId;
             ClothingType = clothingType;
         }
         public string Name { get; private set; } = null!;
+        public DateTime Created { get; private set; } 
         public Guid Id { get; private set; }
         public long UserId { get; private set; }
         public string FileId { get; private set; } = null!;

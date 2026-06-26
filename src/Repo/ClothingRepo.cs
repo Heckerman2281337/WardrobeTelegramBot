@@ -1,27 +1,46 @@
-﻿using telegramBot.src.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using telegramBot.src.Entities;
+using telegramBot.src.Entities.Clothing;
 
 namespace telegramBot.src.Repo
 {
     internal class ClothingRepo : IClothingRepo
     {
-        public Task AddClothingAsync(ClothingItem item)
+        private const int PageSize = 10;
+        public ClothingRepo(ClothingDbContext context) 
+        { 
+            _context = context;
+        }
+        private readonly ClothingDbContext _context;
+
+        public async Task<ClothingItem> AddClothingAsync(ClothingItem item, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            await _context.ClothingItems.AddAsync(item);
+            await _context.SaveChangesAsync();
+            return item;
         }
 
-        public Task DeleteItemAsync(ClothingItem item)
+        public async Task DeleteItemAsync(ClothingItem item, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            _context.Remove(item);
+            await _context.SaveChangesAsync();
         }
 
-        public Task<ClothingItem> GetItemByIdAsync(Guid id)
+        public async Task<List<ClothingItem>> GetItemByTypeAsync(long userId, ClothingItemType type, int page, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
-        }
+            var skip = page * PageSize;
 
-        public Task<List<ClothingItem>> GetItemByTypeAsync(long userId, ClothingItemType type, int skip, int take)
+            return await _context.ClothingItems
+                .AsNoTracking()
+                .Where(x => x.UserId == userId && x.ClothingType == type)
+                .Skip(skip)
+                .Take(PageSize)
+                .OrderByDescending(x => x.Created)
+                .ToListAsync();
+        }
+        public async Task<ClothingItem?> GetItemAsync(Guid id, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return await _context.ClothingItems.FindAsync(id);
         }
     }
 }

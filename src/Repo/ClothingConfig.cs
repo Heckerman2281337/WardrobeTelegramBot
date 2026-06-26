@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using telegramBot.src.Entities;
+using telegramBot.src.Entities.Clothing;
 namespace telegramBot.src.Repo
 {
     internal class ClothingConfig : IEntityTypeConfiguration<ClothingItem>

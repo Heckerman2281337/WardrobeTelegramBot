@@ -12,7 +12,7 @@ using telegramBot.src.Repo;
 namespace telegramBot.src.Migrations
 {
     [DbContext(typeof(ClothingDbContext))]
-    [Migration("20260620172242_ClothingMigration")]
+    [Migration("20260626113936_ClothingMigration")]
     partial class ClothingMigration
     {
         /// <inheritdoc />
@@ -25,7 +25,7 @@ namespace telegramBot.src.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("telegramBot.src.Entities.ClothingItem", b =>
+            modelBuilder.Entity("telegramBot.src.Entities.Clothing.ClothingItem", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -33,6 +33,9 @@ namespace telegramBot.src.Migrations
 
                     b.Property<int>("ClothingType")
                         .HasColumnType("integer");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("FileId")
                         .IsRequired()
