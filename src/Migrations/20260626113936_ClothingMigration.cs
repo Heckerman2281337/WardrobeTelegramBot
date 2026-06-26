@@ -17,6 +17,7 @@ namespace telegramBot.src.Migrations
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Name = table.Column<string>(type: "character varying(80)", maxLength: 80, nullable: false),
+                    Created = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UserId = table.Column<long>(type: "bigint", nullable: false),
                     FileId = table.Column<string>(type: "text", nullable: false),
                     ClothingType = table.Column<int>(type: "integer", nullable: false)

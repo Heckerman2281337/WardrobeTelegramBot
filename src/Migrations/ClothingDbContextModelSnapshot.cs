@@ -22,7 +22,7 @@ namespace telegramBot.src.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("telegramBot.src.Entities.ClothingItem", b =>
+            modelBuilder.Entity("telegramBot.src.Entities.Clothing.ClothingItem", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -30,6 +30,9 @@ namespace telegramBot.src.Migrations
 
                     b.Property<int>("ClothingType")
                         .HasColumnType("integer");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("FileId")
                         .IsRequired()

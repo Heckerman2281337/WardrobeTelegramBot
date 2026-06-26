@@ -12,34 +12,34 @@ namespace telegramBot.src
         }
 
         private readonly IClothingRepo _repo;
-        public async Task AddClothingAsync(string name, long userId, string fileId, ClothingItemType type)
+        public async Task AddClothingAsync(string name, long userId, string fileId, ClothingItemType type, CancellationToken cancellationToken)
         {
             var item = new ClothingItem(name.ToLower(), userId, fileId, type);
             
-            await _repo.AddClothingAsync(item);
+            await _repo.AddClothingAsync(item, cancellationToken);
         }
 
-        public async Task DeleteItemAsync(Guid id)
+        public async Task DeleteItemAsync(Guid id, CancellationToken cancellationToken)
         {
-            var item = await GetItemAsync(id);
+            var item = await GetItemAsync(id, cancellationToken);
 
             if (item == null) return;
 
-            await _repo.DeleteItemAsync(item);
+            await _repo.DeleteItemAsync(item, cancellationToken);
         }
 
-        public async Task<ClothingItem> GetItemAsync(Guid id)
+        public async Task<ClothingItem> GetItemAsync(Guid id, CancellationToken cancellationToken)
         {
-            var item = _repo.GetItemAsync(id);
+            var item = await _repo.GetItemAsync(id, cancellationToken);
 
             if (item == null) throw new ArgumentException($"Item {id} not found");
 
-            return await item;
+            return item;
         }
 
-        public async Task<List<ClothingItem>> GetItemByTypeAsync(long userId, ClothingItemType type, int page)
+        public async Task<List<ClothingItem>> GetItemByTypeAsync(long userId, ClothingItemType type, int page, CancellationToken cancellationToken)
         {
-            return await _repo.GetItemByTypeAsync(userId, type, page);
+            return await _repo.GetItemByTypeAsync(userId, type, page, cancellationToken);
         }
 
         

@@ -19,19 +19,19 @@ namespace telegramBot.src.Services
             {
                 SessionMode.AddItem => new UserSession
                 {
-                    Step = SessionStep.AddingType,
+                    Step = SessionStep.SelectType,
                     Mode = sessionMode
                 },
 
                 SessionMode.RemoveItem => new UserSession
                 {
-                    Step = SessionStep.RemoveItem,
+                    Step = SessionStep.SelectType,
                     Mode = sessionMode
                 },
 
                 SessionMode.CreateOutfit => new UserSession
                 {
-                    Step = SessionStep.ChoosingOutfitTop,
+                    Step = SessionStep.SelectType,
                     Mode = sessionMode
                 },
 

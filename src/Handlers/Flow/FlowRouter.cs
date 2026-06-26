@@ -1,6 +1,5 @@
 ﻿using telegramBot.src.Services;
 using Telegram.Bot;
-using telegramBot.src.Entities.Session;
 using Telegram.Bot.Types;
 
 namespace telegramBot.src.Handlers.Flow
@@ -23,7 +22,6 @@ namespace telegramBot.src.Handlers.Flow
             if (session == null) return;
 
             var targetHandler = _flowHandler.FirstOrDefault(h => h.Mode == session.Mode);
-
             if (targetHandler == null) return;
 
             await targetHandler.HandleAsync(session, message, cancellationToken);

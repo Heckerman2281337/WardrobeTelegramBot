@@ -2,20 +2,12 @@
 {
     public enum SessionStep
     {
-        //Adding step
-        AddingType,
-        AddingPhoto,
-        AddingName,
+        SelectType,
+        SelectPhoto,
+        SelectName,
 
-        //pick outfit step
-        ChoosingOutfitTop,
-        ChoosingOutfitBottom,
-        ChoosingOutfitFootwear,
-        ChoosingOutfitHeadwear,
-        ChoosingOutfitFullBody,
-
-        //Delete
-        RemoveItem
+        SelectItem,
+        ConfirmAction,
     }
 
     public enum SessionMode
