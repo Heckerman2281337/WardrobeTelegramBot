@@ -20,7 +20,7 @@ Tired of trying to find your perfect outfit? And putting all those clothes away 
 > **Privacy First:** Dont worry about photo leaks. All media is securely stored on Telegrams servers. The bot only stores the unique `file_id` of the media, meaning no personal photos are downloaded to database.
 
 ## How to use it?
-1. Start a chat with the bot in Telegram.
+1. Start a chat with the bot in Telegram (Bots username: @wardrobe67_bot).
 2. Send the `/start` command to initialize your wardrobe.
 3. Send a photo of any clothing item.
 4. Follow the bots prompts to select the category and set a name for the item.
