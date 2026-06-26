@@ -41,3 +41,4 @@ Tired of trying to find your perfect outfit? And putting all those clothes away 
 - [ ] Refactor removeflow and outfitflow
 - [ ] Maybe add English lang for it
 - [ ] Maybe add AI to create outfit image?
+- [ ] Host on railway
