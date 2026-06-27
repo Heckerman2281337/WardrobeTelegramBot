@@ -37,8 +37,8 @@ Tired of trying to find your perfect outfit? And putting all those clothes away 
 
 ## Notes for me (TODO)
 - [ ] Add structured logger
-- [X] Dockerize the application (Bot + Database).
+- [x] Dockerize the application (Bot + Database).
 - [ ] Refactor removeflow and outfitflow
 - [ ] Maybe add English lang for it
 - [ ] Maybe add AI to create outfit image?
-- [X] Host on railway
+- [x] Host on railway
