@@ -4,6 +4,7 @@ using Microsoft.Extensions.Hosting;
 using telegramBot.src.Repo;
 using telegramBot.src.Services;
 using telegramBot.src.Handlers;
+using Microsoft.EntityFrameworkCore;
 namespace telegramBot.src
 {
     public class Program
@@ -30,6 +31,13 @@ namespace telegramBot.src
                 }
                 )
                 .Build();
+            
+            // Auto migration (for deployment)
+            using (var scope = host.Services.CreateScope())
+            {
+                var db = scope.ServiceProvider.GetRequiredService<ClothingDbContext>();
+                db.Database.Migrate();
+            }
 
             await host.RunAsync();
         }
