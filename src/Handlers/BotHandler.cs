@@ -43,7 +43,7 @@ namespace telegramBot.src.Handlers
             }
 
 
-            Console.WriteLine($"[Logging] User is using bot ID: {message.From?.Id} | Name: {message.From?.FirstName} | Username: @{message?.From!.Username} | Text: {message!.Text}");
+            Console.WriteLine($"[Logging] Event: MessageReceived | UserID: {message.From?.Id} | ChatID: {message.Chat.Id}");
 
             var session = _sessionManager.GetSession(userId);
             if (session == null) await _commandHandler.HandleCommandAsync(message, cancellationToken);
