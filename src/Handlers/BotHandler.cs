@@ -42,6 +42,9 @@ namespace telegramBot.src.Handlers
                 return;
             }
 
+
+            Console.WriteLine($"[Logging] User is using bot ID: {message.From?.Id} | Name: {message.From?.FirstName} | Username: @{message?.From!.Username} | Text: {message!.Text}");
+
             var session = _sessionManager.GetSession(userId);
             if (session == null) await _commandHandler.HandleCommandAsync(message, cancellationToken);
             else await _flowRouter.RouteFlowAsync(message, userId, cancellationToken);
