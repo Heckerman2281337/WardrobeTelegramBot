@@ -42,3 +42,4 @@ Tired of trying to find your perfect outfit? And putting all those clothes away 
 - [ ] Maybe add English lang for it
 - [ ] Maybe add AI to create outfit image?
 - [x] Host on railway
+- [ ] Make commands more comfortable
