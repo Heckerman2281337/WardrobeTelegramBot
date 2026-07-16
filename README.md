@@ -43,3 +43,4 @@ Tired of trying to find your perfect outfit? And putting all those clothes away 
 - [ ] Maybe add AI to create outfit image?
 - [x] Host on railway
 - [ ] Make commands more comfortable
+- [ ] Add timeout for sessions
