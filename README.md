@@ -1,21 +1,16 @@
-![.NET](https://img.shields.io/badge/.NET-9.0-512BD4?style=flat&logo=dotnet)
-![Telegram API](https://img.shields.io/badge/Telegram_API-2CA5E0?style=flat&logo=telegram)
 # WardrobeTelegramBot
+Project that I created for my gf. She had a trouble with her wardrobe.
 
 ## Stack
-- Language: C# 
-- Framework: .NET (Worker and Hosted services) and EF Core
-- API: Telegram.Bot (Polling)
-- Database: Postgres
-## Description
-Tired of trying to find your perfect outfit? And putting all those clothes away afterward is a real pain!
-
-**WardrobeTelegramBot** is your personal digital closet assistant. It helps you digitize your wardrobe so you can easily find, mix, and match your clothes right from your phone.
-
-## What can it do?
-- **Digitize your clothes:** Just send a photo of your clothing item to the bot.
-- **Categorize & Name:** Assign a type (e.g. *Bottom*, *Top*, *Shoes*) and a custom name (e.g. *Favorite Blue Jeans*).
-- **Browse your looks:** Scroll through your digital wardrobe whenever you need to pick an outfit!
+### Backend
+- C# 
+- .NET 9
+- .NET Generic Host
+- EF Core
+### DB
+- Postgres
+### Other
+- Telegram.Bot (Polling)
 
 > **Privacy First:** Dont worry about photo leaks. All media is securely stored on Telegrams servers. The bot only stores the unique `file_id` of the media, meaning no personal photos are downloaded to database.
 
