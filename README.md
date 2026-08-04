@@ -9,6 +9,8 @@ Project that I created for my gf. She had a trouble with her wardrobe.
 - EF Core
 ### DB
 - Postgres
+### Infrastructure
+- Docker
 ### Other
 - Telegram.Bot (Polling)
 
