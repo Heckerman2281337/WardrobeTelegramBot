@@ -1,3 +1,4 @@
+# !!CURRENTLY DOESN'T DEPLOYED CAUSE IM BROKE!!
 # WardrobeTelegramBot
 Project that I created for my gf. She had a trouble with her wardrobe.
 
